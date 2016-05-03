@@ -1,12 +1,14 @@
 package dbdemo.mysql.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "deparment")
-public class Deparment {
+@Table(name = "department")
+public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -14,9 +16,10 @@ public class Deparment {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "deparment")
     @OrderBy("id asc")
+    @JsonIgnore
     private Set<User> users = new HashSet<>();
 
-    public Deparment() {
+    public Department() {
     }
 
     public Long getId() {

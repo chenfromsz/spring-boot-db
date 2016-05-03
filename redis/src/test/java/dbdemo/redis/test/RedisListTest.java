@@ -22,8 +22,8 @@ import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {RedisConfig.class, UserRedis.class})
-public class RedisTest {
-    private static Logger logger = LoggerFactory.getLogger(RedisTest.class);
+public class RedisListTest {
+    private static Logger logger = LoggerFactory.getLogger(RedisListTest.class);
 
     @Autowired
     UserRedis userRedis;
@@ -46,16 +46,21 @@ public class RedisTest {
 
         user.setRoles(roles);
 
-        userRedis.delete(this.getClass().getName()+":userByname:"+user.getName());
-        userRedis.add(this.getClass().getName()+":userByname:"+user.getName(), 10L, user);
+        List<User> users = new ArrayList<>();
+        users.add(user);
+
+        userRedis.delete(this.getClass().getName()+":userList:"+user.getName());
+        userRedis.add(this.getClass().getName()+":userList:"+user.getName(), 10L, users);
 
     }
 
     @Test
     public void get(){
-        User user = userRedis.get(this.getClass().getName() + ":userByname:user");
-        Assert.notNull(user);
-        logger.info("======user====== name:{}, deparment:{}, role:{}",
-                user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
+        List<User> users = userRedis.getList(this.getClass().getName() + ":userList:user");
+        Assert.notNull(users);
+        for(User user : users) {
+            logger.info("======user====== name:{}, deparment:{}, role:{}",
+                    user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
+        }
     }
 }

@@ -1,9 +1,9 @@
 package dbdemo.mysql.test;
 
-import dbdemo.mysql.entity.Deparment;
+import dbdemo.mysql.entity.Department;
 import dbdemo.mysql.entity.Role;
 import dbdemo.mysql.entity.User;
-import dbdemo.mysql.repository.DeparmentRepository;
+import dbdemo.mysql.repository.DepartmentRepository;
 import dbdemo.mysql.repository.RoleRepository;
 import dbdemo.mysql.repository.UserRepository;
 
@@ -23,7 +23,7 @@ public class MysqlTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    DeparmentRepository deparmentRepository;
+    DepartmentRepository departmentRepository;
     @Autowired
     RoleRepository roleRepository;
 
@@ -31,12 +31,12 @@ public class MysqlTest {
     public void initData(){
         userRepository.deleteAll();
         roleRepository.deleteAll();
-        deparmentRepository.deleteAll();
+        departmentRepository.deleteAll();
 
-        Deparment deparment = new Deparment();
-        deparment.setName("开发部");
-        deparmentRepository.save(deparment);
-        Assert.notNull(deparment.getId());
+        Department department = new Department();
+        department.setName("开发部");
+        departmentRepository.save(department);
+        Assert.notNull(department.getId());
 
         Role role = new Role();
         role.setName("admin");
@@ -46,7 +46,7 @@ public class MysqlTest {
         User user = new User();
         user.setName("user");
         user.setCreatedate(new Date());
-        user.setDeparment(deparment);
+        user.setDeparment(department);
         userRepository.save(user);
         Assert.notNull(user.getId());
     }
