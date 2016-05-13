@@ -4,7 +4,7 @@ package dbdemo.redis.test;
 import dbdemo.mysql.entity.Department;
 import dbdemo.mysql.entity.Role;
 import dbdemo.mysql.entity.User;
-import dbdemo.redis.reposttory.UserRedis;
+import dbdemo.redis.repository.UserRedis;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

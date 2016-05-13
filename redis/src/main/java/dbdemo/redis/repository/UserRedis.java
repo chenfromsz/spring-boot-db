@@ -1,4 +1,4 @@
-package dbdemo.redis.reposttory;
+package dbdemo.redis.repository;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
