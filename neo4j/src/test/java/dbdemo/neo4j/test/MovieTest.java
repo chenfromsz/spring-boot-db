@@ -4,6 +4,7 @@ import dbdemo.neo4j.config.Neo4jConfig;
 import dbdemo.neo4j.domain.Actor;
 import dbdemo.neo4j.domain.Movie;
 import dbdemo.neo4j.domain.Role;
+import dbdemo.neo4j.repositories.ActorRepository;
 import dbdemo.neo4j.repositories.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,10 +24,13 @@ public class MovieTest {
 
     @Autowired
     MovieRepository movieRepository;
+    @Autowired
+    ActorRepository actorRepository;
 
     @Before
     public void initData(){
         movieRepository.deleteAll();
+        actorRepository.deleteAll();
 
         Movie matrix1 = new Movie();
         matrix1.setTitle("The Matrix");
