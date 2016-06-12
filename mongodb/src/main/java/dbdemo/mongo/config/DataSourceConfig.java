@@ -19,7 +19,6 @@ import java.util.List;
 @PropertySource({"classpath:data-source.properties"})
 @EnableMongoRepositories(basePackages = "dbdemo.mongo.repositories")
 public class DataSourceConfig extends AbstractMongoConfiguration {
-
 	@Autowired private Environment env;
 
 	@Override
@@ -34,5 +33,4 @@ public class DataSourceConfig extends AbstractMongoConfiguration {
 		List<MongoCredential> credentials = new ArrayList<>();
 		return new MongoClient(serverAddress, credentials);
 	}
-
 }

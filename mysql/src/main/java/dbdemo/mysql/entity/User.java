@@ -18,16 +18,15 @@ public class User implements java.io.Serializable{
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdate;
 
-    @ManyToOne(cascade = {}, fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "did")
     @JsonBackReference
     private Department deparment;
 
-    @ManyToMany
+    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
-    @JsonIgnore
     private List<Role> roles;
 
     public User() {

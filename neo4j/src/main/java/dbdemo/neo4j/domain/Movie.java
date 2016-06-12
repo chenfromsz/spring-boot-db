@@ -17,7 +17,7 @@ public class Movie {
     String title;
     String year;
 
-    @Relationship(type="ACTS_IN", direction = Relationship.INCOMING)
+    @Relationship(type="ACTS_IN", direction = Relationship.DIRECTION)
     List<Role> roles = new ArrayList<>();
 
     public Role addRole(Actor actor, String name){
