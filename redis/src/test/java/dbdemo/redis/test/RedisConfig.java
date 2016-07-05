@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 
 @Configuration
-public class RedisConfig extends CachingConfigurerSupport {
+public class RedisConfig {
 
     @Bean
     public JedisConnectionFactory jedisConnectionFactory(){
