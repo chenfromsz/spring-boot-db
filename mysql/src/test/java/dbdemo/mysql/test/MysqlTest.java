@@ -92,7 +92,7 @@ public class MysqlTest {
         User user2 = userRepository.readByName("user");
         Assert.notNull(user2);
 
-        List<User> users = userRepository.getByCreatedateLessThan(new Date());
+        List<User> users = userRepository.getByCreateDateLessThan(new Date());
         Assert.notNull(users);
     }
 }
