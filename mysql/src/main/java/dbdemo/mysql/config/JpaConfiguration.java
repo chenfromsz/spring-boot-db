@@ -1,6 +1,5 @@
 package dbdemo.mysql.config;
 
-import org.springframework.boot.orm.jpa.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -13,12 +12,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
+//EnableJpaRepositories: Enabled by default, block it if you don't want to specify a basePackage
 @EnableJpaRepositories(basePackages = "dbdemo.**.repository")
-@EntityScan(basePackages = "dbdemo.**.entity")
+//@EntityScan(basePackages = "dbdemo.**.entity")//No more EntityScan
 public class JpaConfiguration {
 
     @Bean
-    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
