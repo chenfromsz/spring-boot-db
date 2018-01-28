@@ -1,44 +1,26 @@
 package dbdemo.mysql.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements java.io.Serializable{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class User extends AbstractBean implements java.io.Serializable {
+
     private String name;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Date createdate;
 
     @ManyToOne
     @JoinColumn(name = "did")
     @JsonBackReference
-    private Department deparment;
+    private Department department;
 
-    @ManyToMany(cascade = {}, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "roles_id")})
     private List<Role> roles;
-
-    public User() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -48,20 +30,12 @@ public class User implements java.io.Serializable{
         this.name = name;
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Department getDepartment() {
+        return department;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
-    }
-
-    public Department getDeparment() {
-        return deparment;
-    }
-
-    public void setDeparment(Department deparment) {
-        this.deparment = deparment;
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 
     public List<Role> getRoles() {

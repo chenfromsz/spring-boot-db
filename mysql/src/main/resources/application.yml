@@ -1,15 +1,20 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8
+    url: jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false
     username: root
     password: 12345678
   jpa:
     database: MYSQL
+#    Show sql on database operation, will not be record to log files.
     show-sql: true
-  #Hibernate ddl auto (validate|create|create-drop|update)
+#  Hibernate ddl auto (validate|create|create-drop|update)
     hibernate:
       ddl-auto: update
-      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+      naming:
+#        SpringNamingStrategy extend ImprovedNamingStrategy with foreignKeyColumnName() method.
+#        strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
     properties:
       hibernate:
+#      dialect will be set automatically by default.
         dialect: org.hibernate.dialect.MySQL5Dialect
