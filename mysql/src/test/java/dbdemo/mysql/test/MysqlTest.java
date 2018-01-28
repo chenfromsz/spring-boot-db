@@ -62,8 +62,8 @@ public class MysqlTest {
 
         User user = new User();
         user.setName("user");
-        user.setCreatedate(new Date());
-        user.setDeparment(department);
+        user.setCreateDate(new Date());
+        user.setDepartment(department);
 
         List<Role> roles = roleRepository.findAll();
         Assert.notNull(roles);
@@ -80,7 +80,7 @@ public class MysqlTest {
         Assert.notNull(page);
         for (User user : page.getContent()) {
             logger.info("====user==== user name:{}, department name:{}, role name:{}",
-                    user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
+                    user.getName(), user.getDepartment().getName(), user.getRoles().get(0).getName());
         }
     }
 
