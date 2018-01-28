@@ -32,7 +32,7 @@ public class JpaTestConfiguration {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/test?characterEncoding=utf8");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/test?characterEncoding=utf8&useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("12345678");
 
