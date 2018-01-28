@@ -16,13 +16,15 @@ import org.springframework.transaction.support.TransactionTemplate;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-
+/**
+ * Jpa configurations for test
+ */
 @Configuration
 @EnableJpaRepositories(basePackages = "dbdemo.**.repository")
 public class JpaConfiguration {
 
     @Bean
-    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor(){
+    PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
@@ -43,29 +45,28 @@ public class JpaConfiguration {
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan("dbdemo.mysql.entity");
         entityManagerFactoryBean.setJpaProperties(buildHibernateProperties());
-        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter() {{
-            setDatabase(Database.MYSQL);
-        }});
+        HibernateJpaVendorAdapter adapter = new HibernateJpaVendorAdapter();
+        adapter.setDatabase(Database.MYSQL);
+        entityManagerFactoryBean.setJpaVendorAdapter(adapter);
         return entityManagerFactoryBean;
     }
 
-    protected Properties buildHibernateProperties()
-    {
-        Properties hibernateProperties = new Properties();
+    private Properties buildHibernateProperties() {
+        Properties properties = new Properties();
 
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.use_sql_comments", "false");
-        hibernateProperties.setProperty("hibernate.format_sql", "true");
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
-        hibernateProperties.setProperty("hibernate.generate_statistics", "false");
-        hibernateProperties.setProperty("javax.persistence.validation.mode", "none");
+        properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+        properties.setProperty("hibernate.show_sql", "true");
+        properties.setProperty("hibernate.use_sql_comments", "false");
+        properties.setProperty("hibernate.format_sql", "true");
+        properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.generate_statistics", "false");
+        properties.setProperty("javax.persistence.validation.mode", "none");
 
         //Audit History flags
-        hibernateProperties.setProperty("org.hibernate.envers.store_data_at_delete", "true");
-        hibernateProperties.setProperty("org.hibernate.envers.global_with_modified_flag", "true");
+        properties.setProperty("org.hibernate.envers.store_data_at_delete", "true");
+        properties.setProperty("org.hibernate.envers.global_with_modified_flag", "true");
 
-        return hibernateProperties;
+        return properties;
     }
 
     @Bean
