@@ -21,7 +21,7 @@ import java.util.Properties;
  */
 @Configuration
 @EnableJpaRepositories(basePackages = "dbdemo.**.repository")
-public class JpaConfiguration {
+public class JpaTestConfiguration {
 
     @Bean
     PersistenceExceptionTranslationPostProcessor persistenceExceptionTranslationPostProcessor() {

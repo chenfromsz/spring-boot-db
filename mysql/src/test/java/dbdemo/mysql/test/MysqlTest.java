@@ -27,7 +27,7 @@ import java.util.List;
 //@RunWith(SpringJUnit4ClassRunner.class)
 //SpringRunner is extend form SpringJUnit4ClassRunner
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {JpaConfiguration.class})
+@ContextConfiguration(classes = {JpaTestConfiguration.class})
 //Transactional: block it if you DO want these operations happened to your database
 //@Transactional annotation will rollback database operations, which is useful when testing.
 @Transactional
