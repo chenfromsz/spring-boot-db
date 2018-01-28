@@ -50,10 +50,12 @@ public class MysqlTest {
         departmentRepository.deleteAll();
 
         Department department = new Department();
-        department.setName("开发部");
+        department.setName("Research and development");
         departmentRepository.save(department);
         //department's id changed when repository save it to database.
         Assert.notNull(department.getId());
+        //department's createDate is automatically setup by jpa auditing.
+        Assert.notNull(department.getCreateDate());
 
         Role role = new Role();
         role.setName("admin");
@@ -62,7 +64,8 @@ public class MysqlTest {
 
         User user = new User();
         user.setName("user");
-        user.setCreateDate(new Date());
+        //jpa auditing will setup createDate
+        //user.setCreateDate(new Date());
         user.setDepartment(department);
 
         List<Role> roles = roleRepository.findAll();
