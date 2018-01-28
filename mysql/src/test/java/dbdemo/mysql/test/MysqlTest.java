@@ -24,6 +24,8 @@ import org.springframework.util.Assert;
 import java.util.Date;
 import java.util.List;
 
+//Assert.notNull(Object)
+@SuppressWarnings("deprecation")
 //@RunWith(SpringJUnit4ClassRunner.class)
 //SpringRunner is extend form SpringJUnit4ClassRunner
 @RunWith(SpringRunner.class)
@@ -50,6 +52,7 @@ public class MysqlTest {
         Department department = new Department();
         department.setName("开发部");
         departmentRepository.save(department);
+        //department's id changed when repository save it to database.
         Assert.notNull(department.getId());
 
         Role role = new Role();
@@ -71,7 +74,7 @@ public class MysqlTest {
     }
 
     @Test
-    public void findPage() {
+    public void testFindPage() {
         Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "id"));
         Page<User> page = userRepository.findAll(pageable);
         Assert.notNull(page);
@@ -82,7 +85,7 @@ public class MysqlTest {
     }
 
     //@Test
-    public void test() {
+    public void testUserRepository() {
         User user1 = userRepository.findByNameLike("u%");
         Assert.notNull(user1);
 
