@@ -6,7 +6,6 @@ import dbdemo.mysql.entity.User;
 import dbdemo.mysql.repository.DepartmentRepository;
 import dbdemo.mysql.repository.RoleRepository;
 import dbdemo.mysql.repository.UserRepository;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,25 +17,32 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
+//SpringRunner is extend form SpringJUnit4ClassRunner
+@RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {JpaConfiguration.class})
+//Transactional: block it if you DO want these operations happened to your database
+//@Transactional annotation will rollback database operations, which is useful when testing.
+@Transactional
 public class MysqlTest {
     private static Logger logger = LoggerFactory.getLogger(MysqlTest.class);
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    DepartmentRepository departmentRepository;
+    private DepartmentRepository departmentRepository;
     @Autowired
-    RoleRepository roleRepository;
+    private RoleRepository roleRepository;
 
     @Before
-    public void initData(){
+    public void setUp() {
         userRepository.deleteAll();
         roleRepository.deleteAll();
         departmentRepository.deleteAll();
@@ -65,18 +71,18 @@ public class MysqlTest {
     }
 
     @Test
-    public void findPage(){
+    public void findPage() {
         Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "id"));
         Page<User> page = userRepository.findAll(pageable);
         Assert.notNull(page);
-        for(User user : page.getContent()) {
+        for (User user : page.getContent()) {
             logger.info("====user==== user name:{}, department name:{}, role name:{}",
                     user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
         }
     }
 
     //@Test
-    public void test(){
+    public void test() {
         User user1 = userRepository.findByNameLike("u%");
         Assert.notNull(user1);
 
