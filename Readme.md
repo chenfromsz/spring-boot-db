@@ -1,1 +1,1 @@
-Update Spring Boot from 1.3.2 to 1.4.2
+Update Spring Boot to 2.0.6

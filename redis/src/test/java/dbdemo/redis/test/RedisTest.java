@@ -1,61 +1,50 @@
 package dbdemo.redis.test;
 
-
-import dbdemo.mysql.entity.Department;
-import dbdemo.mysql.entity.Role;
-import dbdemo.mysql.entity.User;
-import dbdemo.redis.repository.UserRedis;
+import dbdemo.redis.Application;
+import dbdemo.redis.config.RedisConfig;
+import dbdemo.redis.models.User;
+import dbdemo.redis.service.RedisService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {RedisConfig.class, UserRedis.class})
+@ContextConfiguration(classes = {RedisConfig.class, Application.class})
+@SpringBootTest
 public class RedisTest {
     private static Logger logger = LoggerFactory.getLogger(RedisTest.class);
 
     @Autowired
-    UserRedis userRedis;
+    private RedisService<User> userService;
 
     @Before
     public void setup(){
-        Department deparment = new Department();
-        deparment.setName("开发部");
 
-        Role role = new Role();
-        role.setName("admin");
+        Set<String> roles = new HashSet<>();
+        roles.add("manage");
+        User user = new User("123456", "user", new Date(), roles);
 
-        User user = new User();
-        user.setName("user");
-        user.setCreatedate(new Date());
-        user.setDeparment(deparment);
+        userService.delete(this.getClass().getName(),":userid:"+user.getUserId());
 
-        List<Role> roles = new ArrayList<>();
-        roles.add(role);
-
-        user.setRoles(roles);
-
-        userRedis.delete(this.getClass().getName()+":userByname:"+user.getName());
-        userRedis.add(this.getClass().getName()+":userByname:"+user.getName(), 10L, user);
+        userService.add(this.getClass().getName(),":userid:"+user.getUserId(), user);
 
     }
 
     @Test
     public void get(){
-        User user = userRedis.get(this.getClass().getName() + ":userByname:user");
-        Assert.notNull(user);
-        logger.info("======user====== name:{}, deparment:{}, role:{}",
-                user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
+        User user = userService.get(this.getClass().getName(), ":userid:123456");
+        Assert.notNull(user, "get error");
+        logger.info("======user====== userid:{}, username:{}, role:{}",
+                user.getUserId(), user.getUsername(), user.getRoles().iterator().next());
     }
 }

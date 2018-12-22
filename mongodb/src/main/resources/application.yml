@@ -1,0 +1,15 @@
+# datasource
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+#      username: admin
+#      password: 123456
+#      authentication-database: admin
+#      database: test
+
+
+
+
+

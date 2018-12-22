@@ -3,7 +3,7 @@ package dbdemo.mysql.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "t_role")
 public class Role implements java.io.Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

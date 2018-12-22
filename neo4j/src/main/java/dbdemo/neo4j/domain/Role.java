@@ -1,25 +1,18 @@
 package dbdemo.neo4j.domain;
 
+import org.neo4j.ogm.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.voodoodyne.jackson.jsog.JSOGGenerator;
-import org.neo4j.ogm.annotation.EndNode;
-import org.neo4j.ogm.annotation.GraphId;
-import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.neo4j.ogm.annotation.StartNode;
-
-import java.util.Collection;
-
-@JsonIdentityInfo(generator=JSOGGenerator.class)
-@RelationshipEntity(type = "ACTS_IN")
+@RelationshipEntity(type = "角色")
 public class Role {
-    @GraphId
+    @Id
+    @GeneratedValue
     Long id;
-    String role;
+    String name;
+
     @StartNode
-    Actor actor;
-    @EndNode
     Movie movie;
+    @EndNode
+    Actor actor;
 
     public Role() {
     }
@@ -27,7 +20,7 @@ public class Role {
     public Role(Actor actor, Movie movie, String name) {
         this.actor = actor;
         this.movie = movie;
-        this.role = name;
+        this.name = name;
     }
 
     public Long getId() {
@@ -38,12 +31,12 @@ public class Role {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Actor getActor() {

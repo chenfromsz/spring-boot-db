@@ -3,7 +3,7 @@ package dbdemo.mysql.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "department")
+@Table(name = "t_department")
 public class Department {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,5 +1,7 @@
 package dbdemo.mysql.test;
 
+import dbdemo.mysql.Application;
+import dbdemo.mysql.config.JpaConfiguration;
 import dbdemo.mysql.entity.Department;
 import dbdemo.mysql.entity.Role;
 import dbdemo.mysql.entity.User;
@@ -13,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -24,7 +27,8 @@ import org.springframework.util.Assert;
 import java.util.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfiguration.class})
+@ContextConfiguration(classes = {JpaConfiguration.class, Application.class})
+@SpringBootTest
 public class MysqlTest {
     private static Logger logger = LoggerFactory.getLogger(MysqlTest.class);
 
@@ -44,12 +48,12 @@ public class MysqlTest {
         Department department = new Department();
         department.setName("开发部");
         departmentRepository.save(department);
-        Assert.notNull(department.getId());
+        Assert.notNull(department.getId(), "create department error");
 
         Role role = new Role();
         role.setName("admin");
         roleRepository.save(role);
-        Assert.notNull(role.getId());
+        Assert.notNull(role.getId(), "create role error");
 
         User user = new User();
         user.setName("user");
@@ -57,18 +61,18 @@ public class MysqlTest {
         user.setDeparment(department);
 
         List<Role> roles = roleRepository.findAll();
-        Assert.notNull(roles);
+        Assert.notNull(roles, "find roles error");
         user.setRoles(roles);
 
         userRepository.save(user);
-        Assert.notNull(user.getId());
+        Assert.notNull(user.getId(), "create user error");
     }
 
     @Test
     public void findPage(){
-        Pageable pageable = new PageRequest(0, 10, new Sort(Sort.Direction.ASC, "id"));
+        Pageable pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.ASC, "id"));
         Page<User> page = userRepository.findAll(pageable);
-        Assert.notNull(page);
+        Assert.notNull(page, "find page error");
         for(User user : page.getContent()) {
             logger.info("====user==== user name:{}, department name:{}, role name:{}",
                     user.getName(), user.getDeparment().getName(), user.getRoles().get(0).getName());
@@ -78,12 +82,12 @@ public class MysqlTest {
     //@Test
     public void test(){
         User user1 = userRepository.findByNameLike("u%");
-        Assert.notNull(user1);
+        Assert.notNull(user1, "find user1 error");
 
         User user2 = userRepository.readByName("user");
-        Assert.notNull(user2);
+        Assert.notNull(user2, "find user2 error");
 
         List<User> users = userRepository.getByCreatedateLessThan(new Date());
-        Assert.notNull(users);
+        Assert.notNull(users, "find user list error");
     }
 }
